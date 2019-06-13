@@ -17,12 +17,14 @@ app.use(cors());
 
 app.use((req, res, next) => {
   let checkAuth=false;
+
   tokens.forEach(token => {
     if (typeAuth + ' ' + token === req.headers.authorization) {
-      checkAuth=!checkAuth;
+      checkAuth = true;
     }
   });
-  (checkAuth)?next():res.send(currencies.nonAutorized);
+  
+  (checkAuth)? next() : res.send(currencies.nonAutorized) ;
 });
 
 app.get('/v1/currencies', (req, res) => {
